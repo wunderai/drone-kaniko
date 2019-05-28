@@ -35,9 +35,9 @@ if [ -n "${PLUGIN_BUILD_ARGS:-}" ]; then
 fi
 
 if [ -n "${PLUGIN_TAGS:-}" ]; then
-    DESTINATIONS=$(echo "${PLUGIN_TAGS}" | tr ',' '\n' | while read tag; do echo "--destination=${PLUGIN_REPO}:${tag} "; done)
+    DESTINATIONS=$(echo "${PLUGIN_TAGS}" | tr ',' '\n' | while read tag; do echo "--destination=${PLUGIN_DESTINATION_PREFIX}${PLUGIN_REPO}:${tag} "; done)
 else
-    DESTINATIONS="--destination=${PLUGIN_REPO}:latest"
+    DESTINATIONS="--destination=${PLUGIN_DESTINATION_PREFIX}${PLUGIN_REPO}:latest"
 fi
 
 /kaniko/executor -v ${LOG} \
