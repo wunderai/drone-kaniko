@@ -1,4 +1,14 @@
-FROM gcr.io/kaniko-project/executor:v0.24.0
+FROM golang:1.14-alpine as TOOLS
+RUN apk update && apk upgrade
+RUN apk add --no-cache build-base alpine-sdk busybox-extras ca-certificates 
+
+COPY tools /go/src
+RUN cd /go/src/autotag && go get -a && go build .
+
+
+FROM gcr.io/kaniko-project/executor:debug-v0.24.0
+
+COPY --from=TOOLS /go/bin/autotag /autotag
 
 ENV HOME /root
 ENV USER root
