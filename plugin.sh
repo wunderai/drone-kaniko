@@ -36,7 +36,7 @@ if [ -n "${PLUGIN_BUILD_ARGS:-}" ]; then
 fi
 
 if [[ "${PLUGIN_AUTO_TAG:-}" == "true" ]]; then
-  AUTOTAGS=$(go run cmd/autotag/main.go)
+  AUTOTAGS=$(/autotag)
   PLUGIN_TAGS=${PLUGIN_TAGS},${AUTOTAGS}
   echo "DESTINATIONS:"
   echo "${PLUGIN_TAGS}" | tr ',' '\n' | while read tag; do echo "  - ${DESTINATION_PREFIX}${PLUGIN_REPO}:${tag} "; done
